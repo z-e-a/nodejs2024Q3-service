@@ -1,8 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
 import { IsInt, IsUUID } from 'class-validator';
 
 export class UserDto extends CreateUserDto {
   @IsUUID()
+  @ApiProperty()
   id: string; // uuid v4
 
   @IsInt()

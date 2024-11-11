@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpException,
@@ -35,7 +34,7 @@ export class ArtistController {
   findAll() {
     return this.artistService.findAll();
   }
-  
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     this.checkId(id);
@@ -61,7 +60,7 @@ export class ArtistController {
   checkId(id: string) {
     if (!validateUuid(id)) {
       throw new HttpException(
-        `User id: ${id} is not a valid UUID`,
+        `Artist id: ${id} is not a valid UUID`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -71,7 +70,7 @@ export class ArtistController {
     const artist: ArtistDto = this.artistService.findOne(id);
     if (!artist) {
       throw new HttpException(
-        `Track with id: ${id} not found`,
+        `Artist with id: ${id} not found`,
         HttpStatus.NOT_FOUND,
       );
     }

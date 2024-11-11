@@ -15,15 +15,17 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { validate as validateUuid } from 'uuid';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiResponse, getSchemaPath } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiBadRequestResponse({ description: 'Bad request.'})
-  @ApiCreatedResponse({ description: 'The record has been successfully created.'})
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+  })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }

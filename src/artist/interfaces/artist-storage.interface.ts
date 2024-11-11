@@ -7,5 +7,5 @@ export interface ArtistStore {
   update: (updateArtistDto: Partial<ArtistDto>) => ArtistEntity;
   delete: (id: string) => void;
   getAll: () => ArtistEntity[];
-  findById: (id: string) => ArtistEntity | undefined;  
+  findById: (id: string) => ArtistEntity | undefined;
 }

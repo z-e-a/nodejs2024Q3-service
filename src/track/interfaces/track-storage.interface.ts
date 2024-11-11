@@ -7,5 +7,5 @@ export interface TrackStore {
   update: (updateTrackDto: Partial<TrackDto>) => TrackEntity;
   delete: (id: string) => void;
   getAll: () => TrackEntity[];
-  findById: (id: string) => TrackEntity | undefined;  
+  findById: (id: string) => TrackEntity | undefined;
 }

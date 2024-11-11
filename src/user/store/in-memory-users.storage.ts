@@ -24,7 +24,11 @@ class InMemoryUsersStorage implements UserStore {
   update(updateUserDto: Partial<UserDto>): UserEntity {
     this.records = this.records.map((user) => {
       if (user.id === updateUserDto.id) {
-        return Object.assign(user, {...updateUserDto, version: user.version + 1, updatedAt: Date.now()});
+        return Object.assign(user, {
+          ...updateUserDto,
+          version: user.version + 1,
+          updatedAt: Date.now(),
+        });
       }
       return user;
     });

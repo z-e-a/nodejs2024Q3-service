@@ -3,7 +3,6 @@ import { TrackStore } from '../interfaces/track-storage.interface';
 import { TrackEntity } from '../entities/track.entity';
 import { CreateTrackDto } from '../dto/create-track.dto';
 import { randomUUID } from 'crypto';
-import { TrackDto } from '../dto/track.dto';
 import { UpdateTrackDto } from '../dto/update-track.dto';
 
 @Injectable()
@@ -12,8 +11,8 @@ class InMemoryTracksStorage implements TrackStore {
 
   create(trackDto: CreateTrackDto): TrackEntity {
     const newTrack: TrackEntity = {
-      id: randomUUID(),
       ...trackDto,
+      id: randomUUID(),
     };
     this.records.push(newTrack);
     return newTrack;

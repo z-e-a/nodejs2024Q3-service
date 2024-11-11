@@ -17,7 +17,7 @@ export class UserService {
   }
 
   update(id: string, updateUserDto: Partial<UserDto>) {
-    const updatedUser = { ...this.storage.update({id, ...updateUserDto}) };
+    const updatedUser = { ...this.storage.update({ id, ...updateUserDto }) };
     delete updatedUser['password'];
     return updatedUser;
   }
@@ -45,6 +45,6 @@ export class UserService {
   }
 
   setUserPassword(id: string, newPassword: string) {
-    return this.update(id, {password: newPassword})
+    return this.update(id, { password: newPassword });
   }
 }

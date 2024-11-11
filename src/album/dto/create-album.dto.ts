@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAlbumDto {
   @IsString()
@@ -23,7 +23,7 @@ export class CreateAlbumDto {
   @ApiProperty({
     description: 'Link to Artist',
     type: 'string',
-    required: true
+    required: true,
   })
   artistId: string | null; // refers to Artist
 }

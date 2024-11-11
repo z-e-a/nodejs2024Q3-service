@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpException,
@@ -61,7 +60,7 @@ export class TrackController {
   checkId(id: string) {
     if (!validateUuid(id)) {
       throw new HttpException(
-        `User id: ${id} is not a valid UUID`,
+        `Track id: ${id} is not a valid UUID`,
         HttpStatus.BAD_REQUEST,
       );
     }

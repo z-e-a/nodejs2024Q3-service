@@ -7,5 +7,5 @@ export interface AlbumStore {
   update: (updateAlbumDto: Partial<AlbumDto>) => AlbumEntity;
   delete: (id: string) => void;
   getAll: () => AlbumEntity[];
-  findById: (id: string) => AlbumEntity | undefined;  
+  findById: (id: string) => AlbumEntity | undefined;
 }

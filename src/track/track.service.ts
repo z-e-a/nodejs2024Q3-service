@@ -24,10 +24,26 @@ export class TrackService {
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
-    return this.storage.update({id, ...updateTrackDto});
+    return this.storage.update({ id, ...updateTrackDto });
   }
 
   remove(id: string) {
     this.storage.delete(id);
+  }
+
+  clearLinksToArtist(id: string) {
+    this.storage.getAll().forEach((track) => {
+      if (track.artistId == id) {
+        this.storage.update({ id: track.id, artistId: null });
+      }
+    });
+  }
+
+  clearLinksToAlbum(id: string) {
+    this.storage.getAll().forEach((track) => {
+      if (track.albumId == id) {
+        this.storage.update({ id: track.id, albumId: null });
+      }
+    });
   }
 }

@@ -17,9 +17,9 @@ git clone https://github.com/z-e-a/nodejs2024Q3-service.git
 ```
 
 ## Installing NPM modules
-
+⚠️ **It's important to use `--force` option to avoid errors trow installation process** ⚠️
 ```
-npm install
+npm install --force
 ```
 
 ## Running application

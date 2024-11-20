@@ -38,8 +38,6 @@ export class UserController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    console.log('user id from query:', id);
-
     this.checkId(id);
     const user = await this.checkUser(id);
     return user;
@@ -55,11 +53,6 @@ export class UserController {
         HttpStatus.BAD_REQUEST,
       );
     }
-    // console.log('updateUserDto.oldPassword', updateUserDto.oldPassword);
-    // console.log(
-    //   'this.userService.getUserPassword(id)',
-    //   this.userService.getUserPassword(id),
-    // );
 
     if (
       updateUserDto.oldPassword !== (await this.userService.getUserPassword(id))
@@ -91,7 +84,6 @@ export class UserController {
 
   async checkUser(id: string): Promise<UserDto> {
     const user: UserDto = await this.userService.findOne(id);
-    console.log('User from service', user);
 
     if (!user) {
       throw new HttpException(

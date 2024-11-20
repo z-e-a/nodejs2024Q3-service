@@ -12,14 +12,10 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    // const createdUser = { ...this.storage.create(createUserDto) };
-    // delete createdUser['password'];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...createdUser } = await this.storage.create(
       createUserDto,
     );
-    console.log(password);
-    console.log(createdUser);
-    // return createdUser;
     return {
       ...createdUser,
       createdAt: createdUser.createdAt.getTime(),
@@ -32,7 +28,6 @@ export class UserService {
       ...(await this.storage.update({ id, ...updateUserDto })),
     };
     delete updatedUser['password'];
-    // return updatedUser;
     return {
       ...updatedUser,
       createdAt: updatedUser.createdAt.getTime(),
@@ -45,7 +40,6 @@ export class UserService {
   }
 
   async findAll() {
-    // return this.storage.getAll();
     return (await this.storage.getAll()).map((user) => ({
       ...user,
       createdAt: user.createdAt.getTime(),
@@ -57,14 +51,11 @@ export class UserService {
     const userFromStore = (await this.storage.findById(
       id,
     )) as unknown as UserEntity;
-    console.log('User from store:', userFromStore);
-
     if (!userFromStore) {
       return undefined;
     }
     const userForResponse = { ...userFromStore };
     delete userForResponse['password'];
-    // return userForResponse;
     return {
       ...userForResponse,
       createdAt: userForResponse.createdAt.getTime(),
@@ -73,16 +64,9 @@ export class UserService {
   }
 
   async getUserPassword(id: string) {
-    // return (this.storage.findById(id) as unknown as UserDto).password;
-    // return (this.storage.findById(id) as unknown as UserEntity).password;
-    // const userFromStorage = this.storage.findById(id);
-    // const userFromStorage = {
-    //   ...(this.storage.findById(id) as unknown as UserEntity),
-    // };
     const userFromStorage = (await this.storage.findById(
       id,
     )) as unknown as UserEntity;
-    // console.log('userFromStorage', userFromStorage);
     if (!userFromStorage) {
       return undefined;
     }

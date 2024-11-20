@@ -3,7 +3,7 @@ import { ArtistStore } from '../interfaces/artist-storage.interface';
 import { ArtistEntity } from '../entities/artist.entity';
 import { CreateArtistDto } from '../dto/create-artist.dto';
 import { randomUUID } from 'crypto';
-import { UpdateArtistDto } from '../dto/update-Artist.dto';
+import { UpdateArtistDto } from '../dto/update-artist.dto';
 
 @Injectable()
 class InMemoryArtistsStorage implements ArtistStore {

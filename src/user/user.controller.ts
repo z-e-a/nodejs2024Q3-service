@@ -37,23 +37,33 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    console.log('user id from query:', id);
+
     this.checkId(id);
-    const user = this.checkUser(id);
+    const user = await this.checkUser(id);
     return user;
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     this.checkId(id);
-    this.checkUser(id);
+    await this.checkUser(id);
     if (!updateUserDto) {
       throw new HttpException(
         `Request body does not contain required fields`,
         HttpStatus.BAD_REQUEST,
       );
     }
-    if (updateUserDto.oldPassword !== this.userService.getUserPassword(id)) {
+    // console.log('updateUserDto.oldPassword', updateUserDto.oldPassword);
+    // console.log(
+    //   'this.userService.getUserPassword(id)',
+    //   this.userService.getUserPassword(id),
+    // );
+
+    if (
+      updateUserDto.oldPassword !== (await this.userService.getUserPassword(id))
+    ) {
       throw new HttpException(
         `Wrong old password of user with id: ${id}`,
         HttpStatus.FORBIDDEN,
@@ -64,9 +74,9 @@ export class UserController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     this.checkId(id);
-    this.checkUser(id);
+    await this.checkUser(id);
     return this.userService.remove(id);
   }
 
@@ -79,8 +89,10 @@ export class UserController {
     }
   }
 
-  checkUser(id: string): UserDto {
-    const user: UserDto = this.userService.findOne(id);
+  async checkUser(id: string): Promise<UserDto> {
+    const user: UserDto = await this.userService.findOne(id);
+    console.log('User from service', user);
+
     if (!user) {
       throw new HttpException(
         `User with id: ${id} not found`,

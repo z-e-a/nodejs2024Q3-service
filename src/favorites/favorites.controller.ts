@@ -82,8 +82,8 @@ export class FavoritesController {
     }
   }
 
-  checkAlbum(id: string) {
-    const album: AlbumDto = this.albumService.findOne(id);
+  async checkAlbum(id: string) {
+    const album: AlbumDto = await this.albumService.findOne(id);
     if (!album) {
       throw new HttpException(
         `Album with id: ${id} not found`,

@@ -93,8 +93,8 @@ export class FavoritesController {
     return album;
   }
 
-  checkArtist(id: string) {
-    const artist: ArtistDto = this.artistService.findOne(id);
+  async checkArtist(id: string) {
+    const artist: ArtistDto = await this.artistService.findOne(id);
     if (!artist) {
       throw new HttpException(
         `Artist with id: ${id} not found`,

@@ -19,28 +19,28 @@ export class TrackService {
     return this.storage.getAll();
   }
 
-  findOne(id: string) {
-    return this.storage.findById(id) as TrackDto;
+  async findOne(id: string) {
+    return (await this.storage.findById(id)) as TrackDto;
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
     return this.storage.update({ id, ...updateTrackDto });
   }
 
-  remove(id: string) {
-    this.storage.delete(id);
+  async remove(id: string) {
+    await this.storage.delete(id);
   }
 
-  clearLinksToArtist(id: string) {
-    this.storage.getAll().forEach((track) => {
+  async clearLinksToArtist(id: string) {
+    (await this.storage.getAll()).forEach((track) => {
       if (track.artistId == id) {
         this.storage.update({ id: track.id, artistId: null });
       }
     });
   }
 
-  clearLinksToAlbum(id: string) {
-    this.storage.getAll().forEach((track) => {
+  async clearLinksToAlbum(id: string) {
+    (await this.storage.getAll()).forEach((track) => {
       if (track.albumId == id) {
         this.storage.update({ id: track.id, albumId: null });
       }

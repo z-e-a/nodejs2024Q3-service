@@ -104,8 +104,8 @@ export class FavoritesController {
     return artist;
   }
 
-  checkTrack(id: string): TrackDto {
-    const track: TrackDto = this.trackService.findOne(id);
+  async checkTrack(id: string): Promise<TrackDto> {
+    const track: TrackDto = await this.trackService.findOne(id);
     if (!track) {
       throw new HttpException(
         `Track with id: ${id} not found`,

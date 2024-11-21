@@ -36,25 +36,28 @@ export class TrackController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     this.checkId(id);
-    const track = this.checkTrack(id);
+    const track = await this.checkTrack(id);
     return track;
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateTrackDto: UpdateTrackDto,
+  ) {
     this.checkId(id);
-    this.checkTrack(id);
+    await this.checkTrack(id);
     return this.trackService.update(id, updateTrackDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     this.checkId(id);
-    this.checkTrack(id);
-    return this.trackService.remove(id);
+    await this.checkTrack(id);
+    await this.trackService.remove(id);
   }
 
   checkId(id: string) {
@@ -66,8 +69,8 @@ export class TrackController {
     }
   }
 
-  checkTrack(id: string): TrackDto {
-    const track: TrackDto = this.trackService.findOne(id);
+  async checkTrack(id: string): Promise<TrackDto> {
+    const track: TrackDto = await this.trackService.findOne(id);
     if (!track) {
       throw new HttpException(
         `Track with id: ${id} not found`,

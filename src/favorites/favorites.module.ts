@@ -4,7 +4,8 @@ import { FavoritesController } from './favorites.controller';
 import { TrackModule } from 'src/track/track.module';
 import { ArtistModule } from 'src/artist/artist.module';
 import { AlbumModule } from 'src/album/album.module';
-import InMemoryFavoritesStorage from './store/in-memory-favorites.storage';
+import { PrismaService } from 'src/prisma.service';
+import PostgresFavoritesStorage from './store/postgres-favorites.storage';
 
 @Module({
   controllers: [FavoritesController],
@@ -12,8 +13,9 @@ import InMemoryFavoritesStorage from './store/in-memory-favorites.storage';
     FavoritesService,
     {
       provide: 'FavoritesStore',
-      useClass: InMemoryFavoritesStorage,
+      useClass: PostgresFavoritesStorage,
     },
+    PrismaService,
   ],
   exports: [FavoritesService],
   imports: [TrackModule, ArtistModule, AlbumModule],

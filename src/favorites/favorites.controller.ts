@@ -32,45 +32,45 @@ export class FavoritesController {
   }
 
   @Post('/track/:id')
-  addTrackToFavorites(@Param('id') id: string) {
+  async addTrackToFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.checkTrack(id);
+    await this.checkTrack(id);
     return this.favoritesService.addTrack(id);
   }
 
   @Delete('/track/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  removeTrackFromFavorites(@Param('id') id: string) {
+  async removeTrackFromFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.favoritesService.removeTrack(id);
+    await this.favoritesService.removeTrack(id);
   }
 
   @Post('/album/:id')
-  addAlbumToFavorites(@Param('id') id: string) {
+  async addAlbumToFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.checkAlbum(id);
+    await this.checkAlbum(id);
     return this.favoritesService.addAlbum(id);
   }
 
   @Delete('/album/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  removeAlbumFromFavorites(@Param('id') id: string) {
+  async removeAlbumFromFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.favoritesService.removeAlbum(id);
+    await this.favoritesService.removeAlbum(id);
   }
 
   @Post('/artist/:id')
-  addArtistToFavorites(@Param('id') id: string) {
+  async addArtistToFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.checkArtist(id);
+    await this.checkArtist(id);
     return this.favoritesService.addArtist(id);
   }
 
   @Delete('/artist/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  removeArtistFromFavorites(@Param('id') id: string) {
+  async removeArtistFromFavorites(@Param('id') id: string) {
     this.checkId(id);
-    this.favoritesService.removeArtist(id);
+    await this.favoritesService.removeArtist(id);
   }
 
   checkId(id: string) {

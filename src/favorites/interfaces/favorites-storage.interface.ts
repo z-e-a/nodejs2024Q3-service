@@ -1,5 +1,7 @@
+import { FavoritesDto } from '../dto/favorites.dto';
+
 export interface FavoritesStore {
-  getAll: () => { artists: string[]; albums: string[]; tracks: string[] };
+  getAll: () => Promise<FavoritesDto>;
   addTrack: (id: string) => void;
   removeTrack: (id: string) => void;
   addAlbum: (id: string) => void;

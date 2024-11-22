@@ -19,7 +19,6 @@ services:
     # command: [npm, run, "start:dev"]
     # command: [npm, run, "start:debug"]
     command: [npm, run, "start:dock"]
-    # entrypoint: entrypoint
     depends_on:
       - postgres  
     restart: always
@@ -52,9 +51,5 @@ networks:
       driver: bridge
 
 volumes:
-#   src:
-#     - ./src:/usr/src/app
   db-data:
-#     driver: flocker
-#     driver_opts:
-#       size: "10GiB"
+    name: home-library_postgres-data

@@ -9,6 +9,8 @@ Simple REST-API service using Nest.js for home media library application.
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker [Download & Install Docker](https://docs.docker.com/engine/install/)
+
 
 ## Downloading
 
@@ -21,23 +23,27 @@ git clone https://github.com/z-e-a/nodejs2024Q3-service.git
 ```
 npm install
 ```
-
-## Running application
-Specify the port in the `.env` file (can be copied from `.env.example`) 
+## Docker images
+Images can be downloaded from Docker hub [repository](https://hub.docker.com/u/zubkovevgeny)
 
 ```
-npm start
+docker pull zubkovevgeny/home-library_app
+```
+
+```
+docker pull zubkovevgeny/home-library_db
+```
+
+## Running application
+Specify the parameters in the `.env` file (can be copied from `.env.example`)  
+To run application type:
+```
+docker compose up
 ```
 
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
-
-To run application in development mode
-
-```
-npm start:dev
-```
 
 ## Testing
 
@@ -82,3 +88,19 @@ npm run format
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+
+## Vulnerability scanning
+
+To scan images for vulnerabilities run
+- for application image:
+
+```
+npm run scan:app
+```
+
+
+- for database image:
+```
+npm run scan:db
+```

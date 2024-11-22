@@ -1,4 +1,3 @@
-# version: '3.9'
 services:
   node:
     container_name: home-library_app
@@ -6,15 +5,13 @@ services:
     image: zubkovevgeny/home-library_app
     ports:
       - ${PORT}:${PORT}
-      - 9229:9229
+      - ${DEBUG_PORT}:${DEBUG_PORT}
     networks:
       - front-tier
       - back-tier
     volumes:
       - .:/usr/src/app
-      # - ./usr/src/app/node_modules
     environment:
-      # - DATABASE_URL=postgres://user:password@postgres:5432/db
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
     # command: [npm, run, "start:dev"]
     # command: [npm, run, "start:debug"]
@@ -32,7 +29,7 @@ services:
     networks:
       - back-tier
     volumes:
-      # - ./db-data:/var/lib/postgresql/data/pgdata
+      - db-logs:/var/log/postgresql/
       - db-data:/var/lib/postgresql/data/pgdata
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
@@ -53,3 +50,5 @@ networks:
 volumes:
   db-data:
     name: home-library_postgres-data
+  db-logs:
+    name: home-library_postgres-logs

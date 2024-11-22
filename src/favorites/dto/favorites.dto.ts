@@ -1,5 +1,7 @@
+import { Album, Artist, Track } from '@prisma/client';
+
 export class FavoritesDto {
-  artists: string[]; // favorite artists ids
-  albums: string[]; // favorite albums ids
-  tracks: string[]; // favorite tracks ids
+  artists: Artist[]; // favorite artists
+  albums: Album[]; // favorite albums
+  tracks: Track[]; // favorite tracks
 }

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AlbumService } from './album.service';
 import { AlbumController } from './album.controller';
-import InMemoryAlbumsStorage from './store/in-memory-album.storage';
 import { TrackModule } from 'src/track/track.module';
+import { PrismaService } from 'src/prisma.service';
+import PostgresAlbumsStorage from './store/postgres-album.storage';
 
 @Module({
   controllers: [AlbumController],
@@ -10,8 +11,9 @@ import { TrackModule } from 'src/track/track.module';
     AlbumService,
     {
       provide: 'AlbumStore',
-      useClass: InMemoryAlbumsStorage,
+      useClass: PostgresAlbumsStorage,
     },
+    PrismaService,
   ],
   exports: [AlbumService],
   imports: [TrackModule],

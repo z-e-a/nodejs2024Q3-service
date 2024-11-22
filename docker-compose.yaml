@@ -1,0 +1,54 @@
+services:
+  node:
+    container_name: home-library_app
+    build: .
+    image: zubkovevgeny/home-library_app
+    ports:
+      - ${PORT}:${PORT}
+      - ${DEBUG_PORT}:${DEBUG_PORT}
+    networks:
+      - front-tier
+      - back-tier
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    # command: [npm, run, "start:dev"]
+    # command: [npm, run, "start:debug"]
+    command: [npm, run, "start:dock"]
+    depends_on:
+      - postgres  
+    restart: always
+
+  postgres:
+    container_name: home-library_db
+    build: ./database/
+    image: zubkovevgeny/home-library_db
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - back-tier
+    volumes:
+      - db-logs:/var/log/postgresql/
+      - db-data:/var/lib/postgresql/data/pgdata
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
+
+networks:
+  # The presence of these objects is sufficient to define them
+  front-tier:
+      name: front-tier
+      driver: bridge
+  back-tier:
+      name: back-tier
+      driver: bridge
+
+volumes:
+  db-data:
+    name: home-library_postgres-data
+  db-logs:
+    name: home-library_postgres-logs

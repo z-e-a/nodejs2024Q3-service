@@ -36,25 +36,28 @@ export class ArtistController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     this.checkId(id);
-    const artist = this.checkArtist(id);
+    const artist = await this.checkArtist(id);
     return artist;
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateArtistDto: UpdateArtistDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateArtistDto: UpdateArtistDto,
+  ) {
     this.checkId(id);
-    this.checkArtist(id);
+    await this.checkArtist(id);
     return this.artistService.update(id, updateArtistDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     this.checkId(id);
-    this.checkArtist(id);
-    return this.artistService.remove(id);
+    await this.checkArtist(id);
+    await this.artistService.remove(id);
   }
 
   checkId(id: string) {
@@ -66,8 +69,8 @@ export class ArtistController {
     }
   }
 
-  checkArtist(id: string): ArtistDto {
-    const artist: ArtistDto = this.artistService.findOne(id);
+  async checkArtist(id: string): Promise<ArtistDto> {
+    const artist: ArtistDto = await this.artistService.findOne(id);
     if (!artist) {
       throw new HttpException(
         `Artist with id: ${id} not found`,

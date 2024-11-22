@@ -21,21 +21,21 @@ export class AlbumService {
     return this.storage.getAll();
   }
 
-  findOne(id: string) {
-    return this.storage.findById(id) as AlbumDto;
+  async findOne(id: string) {
+    return (await this.storage.findById(id)) as unknown as AlbumDto;
   }
 
   update(id: string, updateAlbumDto: UpdateAlbumDto) {
     return this.storage.update({ id, ...updateAlbumDto });
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     this.trackService.clearLinksToAlbum(id);
-    this.storage.delete(id);
+    await this.storage.delete(id);
   }
 
-  clearLinksToArtist(id: string) {
-    this.storage.getAll().forEach((album) => {
+  async clearLinksToArtist(id: string) {
+    (await this.storage.getAll()).forEach((album) => {
       if (album.artistId == id) {
         this.storage.update({ id: album.id, artistId: null });
       }

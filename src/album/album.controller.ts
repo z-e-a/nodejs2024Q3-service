@@ -36,25 +36,28 @@ export class AlbumController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     this.checkId(id);
-    const album = this.checkAlbum(id);
+    const album = await this.checkAlbum(id);
     return album;
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateAlbumDto: UpdateAlbumDto,
+  ) {
     this.checkId(id);
-    this.checkAlbum(id);
+    await this.checkAlbum(id);
     return this.albumService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     this.checkId(id);
-    this.checkAlbum(id);
-    return this.albumService.remove(id);
+    await this.checkAlbum(id);
+    await this.albumService.remove(id);
   }
 
   checkId(id: string) {
@@ -66,8 +69,8 @@ export class AlbumController {
     }
   }
 
-  checkAlbum(id: string): AlbumDto {
-    const album: AlbumDto = this.albumService.findOne(id);
+  async checkAlbum(id: string): Promise<AlbumDto> {
+    const album: AlbumDto = await this.albumService.findOne(id);
     if (!album) {
       throw new HttpException(
         `Album with id: ${id} not found`,

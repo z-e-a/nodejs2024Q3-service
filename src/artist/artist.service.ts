@@ -23,17 +23,17 @@ export class ArtistService {
     return this.storage.getAll();
   }
 
-  findOne(id: string) {
-    return this.storage.findById(id) as ArtistDto;
+  async findOne(id: string) {
+    return (await this.storage.findById(id)) as unknown as ArtistDto;
   }
 
   update(id: string, updateArtistDto: UpdateArtistDto) {
     return this.storage.update({ id, ...updateArtistDto });
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     this.trackService.clearLinksToArtist(id);
     this.albumService.clearLinksToArtist(id);
-    this.storage.delete(id);
+    await this.storage.delete(id);
   }
 }

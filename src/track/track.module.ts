@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { TrackController } from './track.controller';
-import InMemoryTracksStorage from './store/in-memory-tracks.storage';
+import { PrismaService } from 'src/prisma.service';
+import PostgresTracksStorage from './store/postgres-tracks.storage';
 
 @Module({
   controllers: [TrackController],
@@ -9,8 +10,9 @@ import InMemoryTracksStorage from './store/in-memory-tracks.storage';
     TrackService,
     {
       provide: 'TrackStore',
-      useClass: InMemoryTracksStorage,
+      useClass: PostgresTracksStorage,
     },
+    PrismaService,
   ],
   exports: [TrackService],
 })

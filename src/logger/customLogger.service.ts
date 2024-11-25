@@ -1,9 +1,11 @@
 import {
   ConsoleLogger,
+  Injectable,
   type LogLevel,
   type LoggerService,
 } from '@nestjs/common';
 
+@Injectable()
 export class CustomLogger extends ConsoleLogger implements LoggerService {
   static create() {
     return new CustomLogger();

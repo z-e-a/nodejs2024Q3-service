@@ -8,6 +8,9 @@ import { AlbumModule } from './album/album.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { CustomLoggerModule } from './logger/logger.module';
+import { APP_FILTER } from '@nestjs/core';
+import { CustomHttpExceptionModule } from './exception-filter/custom-http-exception.module';
+import { CustomHttpExceptionFilter } from './exception-filter/custom-http-exception.filter';
 
 @Module({
   imports: [
@@ -17,9 +20,16 @@ import { CustomLoggerModule } from './logger/logger.module';
     AlbumModule,
     FavoritesModule,
     CustomLoggerModule,
+    CustomHttpExceptionModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: CustomHttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

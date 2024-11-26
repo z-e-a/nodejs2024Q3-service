@@ -9,7 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-  app.useLogger(app.get(CustomLogger));
+  const logger = app.get(CustomLogger);
+  app.useLogger(logger);
   app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
     .setTitle('Home Library Service')
@@ -19,5 +20,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
   await app.listen(process.env.PORT ?? 4000);
+
+  process.on('uncaughtException', (err, origin) => {
+    logger.error(`Uncaught exception: ${err.message}`, origin);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error(
+      `Unhandled Rejection at: ${promise} reason: ${reason}`,
+      process.constructor.name,
+    );
+  });
 }
 bootstrap();

@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('/error')
   getError(): string {
-    throw new HttpException('Testing error!', HttpStatus.NO_CONTENT);
+    throw new HttpException('Testing error!', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

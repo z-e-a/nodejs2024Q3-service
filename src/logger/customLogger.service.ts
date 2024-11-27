@@ -30,26 +30,36 @@ export class CustomLogger extends ConsoleLogger implements LoggerService {
   }
 
   log(message: string, context: string) {
-    super.log(message, context);
-    this.writeToFile(message, context, 'log');
+    if (this.logLevel >= 2) {
+      super.log(message, context);
+      this.writeToFile(message, context, 'log');
+    }
   }
 
   error(message: string, context: string) {
-    super.error(message, context);
-    this.writeToFile(message, context, 'log');
-    this.writeToFile(message, context, 'err');
+    if (this.logLevel >= 0) {
+      super.error(message, context);
+      this.writeToFile(message, context, 'log');
+      this.writeToFile(message, context, 'err');
+    }
   }
 
   warn(message: string, context: string) {
-    super.warn(message, context);
+    if (this.logLevel >= 1) {
+      super.warn(message, context);
+    }
   }
 
   debug(message: string, context: string) {
-    super.debug(message, context);
+    if (this.logLevel >= 3) {
+      super.debug(message, context);
+    }
   }
 
   verbose(message: string, context: string) {
-    super.verbose(message, context);
+    if (this.logLevel >= 4) {
+      super.verbose(message, context);
+    }
   }
 
   fatal(message: string, context: string) {

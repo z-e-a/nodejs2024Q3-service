@@ -42,6 +42,12 @@ class PostgresUsersStorage implements UserStore {
       where: { id },
     });
   }
+
+  async findOneByLogin(login: string): Promise<UserEntity | undefined> {
+    return await this.prisma.user.findFirst({
+      where: { login },
+    });
+  }
 }
 
 export default PostgresUsersStorage;

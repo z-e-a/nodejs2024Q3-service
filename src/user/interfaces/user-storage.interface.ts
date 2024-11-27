@@ -8,4 +8,5 @@ export interface UserStore {
   delete: (id: string) => void;
   getAll: () => Promise<UserEntity[]>;
   findById: (id: string) => Promise<UserEntity | undefined>;
+  findOneByLogin: (login: string) => Promise<UserEntity | undefined>;
 }

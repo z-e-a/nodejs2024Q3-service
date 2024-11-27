@@ -11,6 +11,7 @@ import { CustomLoggerModule } from './logger/logger.module';
 import { APP_FILTER } from '@nestjs/core';
 import { CustomHttpExceptionModule } from './exception-filter/custom-http-exception.module';
 import { CustomHttpExceptionFilter } from './exception-filter/custom-http-exception.filter';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CustomHttpExceptionFilter } from './exception-filter/custom-http-except
     FavoritesModule,
     CustomLoggerModule,
     CustomHttpExceptionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

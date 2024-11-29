@@ -76,4 +76,8 @@ export class UserService {
   setUserPassword(id: string, newPassword: string) {
     return this.update(id, { password: newPassword });
   }
+
+  async getUserByLogin(login: string): Promise<UserEntity | undefined> {
+    return await this.storage.findOneByLogin(login);
+  }
 }

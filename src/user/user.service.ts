@@ -3,7 +3,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserStore } from './interfaces/user-storage.interface';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
-import { AuthDto } from 'src/auth/dto/auth.dto';
 
 @Injectable()
 export class UserService {
@@ -78,7 +77,7 @@ export class UserService {
     return this.update(id, { password: newPassword });
   }
 
-  async getUserByLogin(login: string): Promise<AuthDto | undefined> {
+  async getUserByLogin(login: string): Promise<UserEntity | undefined> {
     return await this.storage.findOneByLogin(login);
   }
 }

@@ -3,6 +3,7 @@ import { UserService } from 'src/user/user.service';
 import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { TokenService } from 'src/token/token.service';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
   async login(authDto: AuthDto) {
-    const userFromService = await this.userService.getUserByLogin(
+    const userFromService: UserEntity = await this.userService.getUserByLogin(
       authDto.login,
     );
 
@@ -50,6 +51,9 @@ export class AuthService {
       throw new HttpException(`Bad credentials`, HttpStatus.FORBIDDEN);
     }
 
-    return this.tokenService.generateTokens(authDto);
+    return this.tokenService.generateTokens({
+      userId: userFromService.id,
+      login: userFromService.login,
+    });
   }
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AuthDto } from 'src/auth/dto/auth.dto';
-
 import { JwtService } from '@nestjs/jwt';
 import { TokensDto } from './dto/tokens.dto';
+import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class TokenService {
@@ -18,7 +17,7 @@ export class TokenService {
     this.tokenRefreshExpireTime = process.env.TOKEN_REFRESH_EXPIRE_TIME;
   }
 
-  generateTokens(authDto: AuthDto): TokensDto {
+  generateTokens(authDto: TokenDto): TokensDto {
     const jwtService = new JwtService();
     const accessToken = jwtService.sign(authDto, {
       secret: this.jwtSecretKey,
@@ -31,5 +30,13 @@ export class TokenService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async checkAccessToken(token: string) {
+    const jwtService = new JwtService();
+
+    return jwtService.verify<TokenDto>(token, {
+      secret: this.jwtSecretKey,
+    });
   }
 }

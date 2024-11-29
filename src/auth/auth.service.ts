@@ -4,6 +4,8 @@ import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { TokenService } from 'src/token/token.service';
 import { UserEntity } from 'src/user/entities/user.entity';
+import { RefreshAuthDto } from './dto/refresh.dto';
+import { TokenDto } from 'src/token/dto/token.dto';
 
 @Injectable()
 export class AuthService {
@@ -54,6 +56,24 @@ export class AuthService {
     return this.tokenService.generateTokens({
       userId: userFromService.id,
       login: userFromService.login,
+    });
+  }
+
+  async refreshToken(refreshAuthDto: RefreshAuthDto) {
+    let tokenDto: TokenDto;
+    try {
+      tokenDto = await this.tokenService.checkToken(
+        refreshAuthDto.refreshToken,
+      );
+    } catch {
+      throw new HttpException(
+        `Refresh token is invalid`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return this.tokenService.generateTokens({
+      userId: tokenDto.userId,
+      login: tokenDto.login,
     });
   }
 }

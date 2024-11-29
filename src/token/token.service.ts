@@ -32,7 +32,7 @@ export class TokenService {
     return { accessToken, refreshToken };
   }
 
-  async checkAccessToken(token: string) {
+  async checkToken(token: string) {
     const jwtService = new JwtService();
 
     return jwtService.verify<TokenDto>(token, {

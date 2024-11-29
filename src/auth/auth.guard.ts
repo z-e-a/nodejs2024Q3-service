@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      await this.tokenService.checkAccessToken(token);
+      await this.tokenService.checkToken(token);
     } catch {
       throw new HttpException(
         `Access token is invalid`,
